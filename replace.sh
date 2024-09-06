@@ -7,12 +7,12 @@
 while read line; do
     # echo $line
     i=$((i + 1))
-    # echo $i
-    key1=$(sed -n "$((i * 2 - 1))p" key.txt)
+
+    # key1=$(sed -n "$((i * 2 - 1))p" key.txt)
     key2=$(sed -n "$((i * 2))p" key.txt)
+
     # echo $key1
     # echo $key2
 
     echo "$line" | sed "s#\('[^']*','[^']*','\)[^']*\('.*\)#\1${key2}\2#"
-    # echo $i
 done <sql.txt

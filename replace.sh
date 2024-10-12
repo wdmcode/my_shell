@@ -14,5 +14,13 @@ while read line; do
     # echo $key1
     # echo $key2
 
-    echo "$line" | sed "s#\('[^']*','[^']*','\)[^']*\('.*\)#\1${key2}\2#"
+    if echo "$line" | grep -q 'RETURNING "id"'; then
+        line=$(echo "$line" | sed 's/RETURNING "id"//')
+    fi
+    if ! echo "$line" | grep -q ';$'; then
+        line="$line;"
+    fi
+
+    # echo "$line" | sed "s#\('[^']*','[^']*','\)[^']*\('.*\)#\1${key1}\2#" >>1.sql
+    echo "$line" | sed "s#\('[^']*','[^']*','\)[^']*\('.*\)#\1${key2}\2#" >>1.sql
 done <sql.txt
